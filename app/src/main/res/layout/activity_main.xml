@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/holo_purple">
+
+
+    <com.example.rio.mvpapp.customview.CustomViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:background="@android:color/white"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        app:tabTextColor="@color/textExtraColor"
+        app:tabIndicatorColor="@color/extraColor"
+        app:tabIndicatorHeight="@dimen/_2sdp"
+        app:tabSelectedTextColor="@android:color/white"
+        android:background="@drawable/bg_toolbar" />
+
+</RelativeLayout>
