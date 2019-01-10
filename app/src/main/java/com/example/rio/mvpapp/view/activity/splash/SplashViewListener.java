@@ -1,5 +1,6 @@
 package com.example.rio.mvpapp.view.activity.splash;
 
+import com.example.rio.mvpapp.di.PerActivity;
 import com.example.rio.mvpapp.model.User;
 
 public interface SplashViewListener {

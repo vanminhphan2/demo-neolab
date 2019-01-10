@@ -4,12 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.rio.mvpapp.data.AppDataManager;
 import com.example.rio.mvpapp.di.ApplicationContext;
-import com.example.rio.mvpapp.di.PreferenceInfo;
+import com.example.rio.mvpapp.di.DatabaseInfo;
 import com.example.rio.mvpapp.utils.Constants;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,8 +16,8 @@ public class ApplicationModule {
 
     private final Application mApplication;
 
-    public ApplicationModule(Application application) {
-        mApplication = application;
+    public ApplicationModule(Application app) {
+        mApplication = app;
     }
 
     @Provides
@@ -35,10 +32,19 @@ public class ApplicationModule {
     }
 
     @Provides
-    @PreferenceInfo
-    SharedPreferences provideSharedPrefs(){
-        return mApplication.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+    @DatabaseInfo
+    String provideDatabaseName() {
+        return "demo-dagger.db";
     }
 
+    @Provides
+    @DatabaseInfo
+    Integer provideDatabaseVersion() {
+        return 2;
+    }
 
+    @Provides
+    SharedPreferences provideSharedPrefs() {
+        return mApplication.getSharedPreferences("demo-prefs", Context.MODE_PRIVATE);
+    }
 }

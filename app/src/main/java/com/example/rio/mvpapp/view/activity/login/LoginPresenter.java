@@ -1,4 +1,4 @@
-package com.example.rio.mvpapp.presenter.splash;
+package com.example.rio.mvpapp.view.activity.login;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,33 +10,51 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.rio.mvpapp.api.Common;
 import com.example.rio.mvpapp.data.prefs.SharedPrefsHelper;
 import com.example.rio.mvpapp.model.ResultServer;
+import com.example.rio.mvpapp.utils.Constants;
 import com.example.rio.mvpapp.utils.VolleySingleton;
-import com.example.rio.mvpapp.view.activity.splash.SplashViewListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SplashPresenter implements SplashPresenterListener{
+import javax.inject.Inject;
 
-    private SplashViewListener splashViewListener;
+public class LoginPresenter  implements LoginPresenterListener{
+
     private SharedPrefsHelper sharedPrefsHelper;
+
+    private LoginViewListener loginViewListener;
     private Context context;
 
-    public SplashPresenter(SplashViewListener splashViewListener, Context context) {
-        this.splashViewListener = splashViewListener;
-        this.context = context;
+    @Inject
+    public LoginPresenter(SharedPrefsHelper sharedPrefsHelper) {
+        this.sharedPrefsHelper=sharedPrefsHelper;
     }
 
     @Override
-    public void checkLogin() {
-//        sharedPrefsHelper = new SharedPrefsHelper();
-//        if(sharedPrefsHelper.getPhoneNumber(context).equals("")){
-//            splashViewListener.toLogin();
-//        }else {
-//            loginServer(sharedPrefsHelper.getPhoneNumber(context), sharedPrefsHelper.getPassword(context));
-//        }
+    public void checkLogin(String phone, String pass) {
+
+
+        if (phone == null || phone.equals("")) {
+            loginViewListener.emptyPhone();
+        } else if (pass == null || pass.equals("")) {
+            loginViewListener.emptyPass();
+        } else if (phone.trim().length() <10) {
+            loginViewListener.phoneWrong();
+        } else if (pass.trim().length() < 6) {
+            loginViewListener.passWrong();
+        }else {
+            loginServer(phone,pass);
+//            loginViewListener.loginSuccess(new User());
+        }//loginViewListener.loginSuccess();
+
+    }
+
+    @Override
+    public void setViewListener(Context context, LoginViewListener loginViewListener) {
+        this.loginViewListener = loginViewListener;
+        this.context=context;
     }
 
     private void loginServer(final String phone, final String pass) {
@@ -57,11 +75,14 @@ public class SplashPresenter implements SplashPresenterListener{
                         resultServer = gson.fromJson(response.toString(), ResultServer.class);
                         if (resultServer != null) {
                             if (resultServer.isStatus()) {
+                                loginViewListener.loginSuccess(resultServer.getData());
 
-                                splashViewListener.toMain(resultServer.getData());
+                                Log.e("Rio ", "loginServer - - getData--> " + resultServer.getData().toString());
+                                sharedPrefsHelper.put(Constants.PHONE,phone);
+                                sharedPrefsHelper.put(Constants.PASS,pass);
 
                             } else {
-                                splashViewListener.toLogin();
+                                loginViewListener.loginFail(resultServer.getMessage());
                             }
                         }
                     } catch (Exception e) {
@@ -71,7 +92,7 @@ public class SplashPresenter implements SplashPresenterListener{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    splashViewListener.toLogin();
+                    loginViewListener.loginFail("Lỗi kết nối với server!");
                     Log.e("Rio ", "loginServer -- onErrorResponse :" + error.toString());
                 }
             }) {

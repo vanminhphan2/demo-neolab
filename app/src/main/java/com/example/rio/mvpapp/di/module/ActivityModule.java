@@ -3,17 +3,23 @@ package com.example.rio.mvpapp.di.module;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.rio.mvpapp.di.ActivityContext;
+import com.example.rio.mvpapp.di.PerActivity;
+import com.example.rio.mvpapp.view.activity.login.LoginPresenter;
+import com.example.rio.mvpapp.view.activity.login.LoginPresenterListener;
+import com.example.rio.mvpapp.view.activity.splash.SplashPresenter;
+import com.example.rio.mvpapp.view.activity.splash.SplashPresenterListener;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class ActivityModule {
-    private Activity mActivity;
+    private AppCompatActivity mActivity;
 
-    public ActivityModule(Activity mActivity) {
+    public ActivityModule(AppCompatActivity mActivity) {
         this.mActivity = mActivity;
     }
 
@@ -24,7 +30,21 @@ public class ActivityModule {
     }
 
     @Provides
-    Activity provideActivity(){
+    AppCompatActivity provideActivity(){
         return mActivity;
+    }
+
+    @Provides
+    @PerActivity
+    LoginPresenterListener provideLoginPresenterListener(
+            LoginPresenter presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    SplashPresenterListener provideSplashPresenterListener(
+            SplashPresenter presenter) {
+        return presenter;
     }
 }

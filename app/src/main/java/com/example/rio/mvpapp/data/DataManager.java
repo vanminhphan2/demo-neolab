@@ -1,25 +1,41 @@
 package com.example.rio.mvpapp.data;
 
-import com.example.rio.mvpapp.data.prefs.PreferencesHelper;
+import android.content.Context;
 
-public interface DataManager extends PreferencesHelper {
+import com.example.rio.mvpapp.data.prefs.SharedPrefsHelper;
+import com.example.rio.mvpapp.data.sqlite.DbHelper;
+import com.example.rio.mvpapp.di.ApplicationContext;
 
-    enum LoggedInMode {
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-        LOGGED_IN_MODE_LOGGED_OUT(0),
-        LOGGED_IN_MODE_GOOGLE(1),
-        LOGGED_IN_MODE_FB(2),
-        LOGGED_IN_MODE_SERVER(3);
 
-        private final int mType;
+@Singleton
+public class DataManager {
 
-        LoggedInMode(int type) {
-            mType = type;
-        }
+    private Context mContext;
+    private DbHelper mDbHelper;
+    private SharedPrefsHelper mSharedPrefsHelper;
 
-        public int getType() {
-            return mType;
-        }
+    @Inject
+    public DataManager(@ApplicationContext Context context,
+                       DbHelper dbHelper,
+                       SharedPrefsHelper sharedPrefsHelper) {
+        mContext = context;
+        mDbHelper = dbHelper;
+        mSharedPrefsHelper = sharedPrefsHelper;
+    }
+
+    public void saveAccessToken(String accessToken) {
+        mSharedPrefsHelper.put(SharedPrefsHelper.PREF_KEY_ACCESS_TOKEN, accessToken);
+    }
+
+    public String getAccessToken(){
+        return mSharedPrefsHelper.get(SharedPrefsHelper.PREF_KEY_ACCESS_TOKEN, null);
+    }
+
+    public SharedPrefsHelper getPrefs(){
+        return mSharedPrefsHelper;
     }
 
 }
