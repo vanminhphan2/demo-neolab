@@ -1,6 +1,6 @@
 package com.example.rio.mvpapp.api;
 
-public class Common {
+public class Api {
 
 //    public static final String IP_LOCAL_SERVER = "http://192.168.3.236:3000/";
     public static final String IP_LOCAL_SERVER = "http://192.168.2.241:3000/";

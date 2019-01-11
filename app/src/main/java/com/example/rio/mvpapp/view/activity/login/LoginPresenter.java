@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.rio.mvpapp.api.Common;
+import com.example.rio.mvpapp.api.Api;
 import com.example.rio.mvpapp.data.prefs.SharedPrefsHelper;
 import com.example.rio.mvpapp.model.ResultServer;
 import com.example.rio.mvpapp.utils.Constants;
@@ -63,7 +63,7 @@ public class LoginPresenter  implements LoginPresenterListener{
             jsonObject.put("phone", phone);
             jsonObject.put("password", pass);
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Common.LOGIN_API, jsonObject, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Api.LOGIN_API, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.e("Rio ", "loginServer - - onResponse--> " + response.toString());

@@ -1,12 +1,7 @@
 package com.example.rio.mvpapp.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.rio.mvpapp.R;
-import com.example.rio.mvpapp.inf.ILoadMore;
 import com.example.rio.mvpapp.inf.MyOnClick;
 import com.example.rio.mvpapp.model.User;
 import com.example.rio.mvpapp.utils.Utils;

@@ -7,8 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.rio.mvpapp.api.Common;
-import com.example.rio.mvpapp.model.ResultServer;
+import com.example.rio.mvpapp.api.Api;
 import com.example.rio.mvpapp.model.User;
 import com.example.rio.mvpapp.utils.VolleySingleton;
 import com.example.rio.mvpapp.view.fragment.top.TopViewListener;
@@ -58,7 +57,7 @@ public class TopPresenter implements TopPresenterListener {
     private void getListUserServer() {
         JSONObject jsonObject = new JSONObject();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Common.GET_LIST_USER_API, jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Api.GET_LIST_USER_API, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -105,7 +104,7 @@ public class TopPresenter implements TopPresenterListener {
     private void refreshDataFromSV() {
         JSONObject jsonObject = new JSONObject();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Common.GET_LIST_USER_API, jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Api.GET_LIST_USER_API, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -152,7 +151,7 @@ public class TopPresenter implements TopPresenterListener {
     private void getListUserMoreServer() {
         JSONObject jsonObject = new JSONObject();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Common.GET_LIST_USER_API, jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Api.GET_LIST_USER_API, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 

@@ -7,13 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.rio.mvpapp.di.ActivityContext;
 import com.example.rio.mvpapp.di.PerActivity;
+import com.example.rio.mvpapp.retrofit.RetrofitBuilder;
 import com.example.rio.mvpapp.view.activity.login.LoginPresenter;
 import com.example.rio.mvpapp.view.activity.login.LoginPresenterListener;
 import com.example.rio.mvpapp.view.activity.splash.SplashPresenter;
 import com.example.rio.mvpapp.view.activity.splash.SplashPresenterListener;
+import com.example.rio.mvpapp.view.activity.splash.SplashViewListener;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 @Module
 public class ActivityModule {
@@ -25,12 +28,12 @@ public class ActivityModule {
 
     @Provides
     @ActivityContext
-    Context provideContext(){
+    Context provideContext() {
         return mActivity;
     }
 
     @Provides
-    AppCompatActivity provideActivity(){
+    AppCompatActivity provideActivity() {
         return mActivity;
     }
 
@@ -47,4 +50,6 @@ public class ActivityModule {
             SplashPresenter presenter) {
         return presenter;
     }
+
+
 }

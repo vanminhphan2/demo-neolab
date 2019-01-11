@@ -2,13 +2,12 @@ package com.example.rio.mvpapp.presenter.main.setting;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.rio.mvpapp.api.Common;
+import com.example.rio.mvpapp.api.Api;
 import com.example.rio.mvpapp.model.ResultServer;
 import com.example.rio.mvpapp.model.User;
 import com.example.rio.mvpapp.utils.VolleySingleton;
@@ -43,7 +42,7 @@ public class EditAccountPresenter implements EditAccountPresenterListener{
             jsonObject.put("id", user.getId());
             jsonObject.put("name", user.getName());
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Common.UPDATE_USER_NAME_API, jsonObject, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Api.UPDATE_USER_NAME_API, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
 
