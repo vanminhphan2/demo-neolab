@@ -1,5 +1,8 @@
 package com.example.rio.mvpapp.retrofit;
 
+import com.example.rio.mvpapp.di.API;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -13,7 +16,7 @@ public class RetrofitBuilder {
     private   Retrofit retrofit;
 
     @Inject
-    public RetrofitBuilder(String baseUrl) {
+    public RetrofitBuilder(@API String baseUrl) {
         this.baseUrl = baseUrl;
     }
 
@@ -21,6 +24,7 @@ public class RetrofitBuilder {
         if (retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

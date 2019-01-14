@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.rio.mvpapp.api.Api;
+import com.example.rio.mvpapp.di.API;
 import com.example.rio.mvpapp.di.ApplicationContext;
 import com.example.rio.mvpapp.di.DatabaseInfo;
 import com.google.gson.FieldNamingPolicy;
@@ -55,6 +56,12 @@ public class ApplicationModule {
     @Provides
     SharedPreferences provideSharedPrefs() {
         return mApplication.getSharedPreferences("demo-prefs", Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @API
+    String provideUrl() {
+        return Api.IP_LOCAL_SERVER;
     }
 
 

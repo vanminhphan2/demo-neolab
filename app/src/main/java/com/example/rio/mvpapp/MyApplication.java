@@ -3,12 +3,15 @@ package com.example.rio.mvpapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.rio.mvpapp.api.Api;
 import com.example.rio.mvpapp.data.DataManager;
 import com.example.rio.mvpapp.di.component.ApplicationComponent;
 import com.example.rio.mvpapp.di.component.DaggerApplicationComponent;
 import com.example.rio.mvpapp.di.module.ApplicationModule;
+import com.example.rio.mvpapp.di.module.NetModule;
 
 import javax.inject.Inject;
+
 
 public class MyApplication extends Application {
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.rio.mvpapp.MyApplication;
 import com.example.rio.mvpapp.R;
@@ -57,6 +58,7 @@ public class SplashActivity extends AppCompatActivity implements SplashViewListe
             }
         },2000);
     }
+
 
     @Override
     public void toLogin() {

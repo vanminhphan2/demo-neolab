@@ -37,7 +37,7 @@ public class NetModule {
 //        Cache cache = new Cache(application.getCacheDir(), cacheSize);
 //        return cache;
 //    }
-
+//
 //    @Provides
 //    @Singleton
 //    Gson provideGson() {
@@ -53,7 +53,7 @@ public class NetModule {
 //        client.cache(cache);
 //        return client.build();
 //    }
-
+//
 //    @Provides
 //    @Singleton
 //    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
@@ -63,11 +63,11 @@ public class NetModule {
 //                .client(okHttpClient)
 //                .build();
 //    }
-
+//
 //    @Provides
 //    @PerNet
-    SplashPresenterListener provideSplashPresenterListener(
-            SplashPresenter presenter) {
-        return presenter;
-    }
+//    SplashPresenterListener provideSplashPresenterListener(
+//            SplashPresenter presenter) {
+//        return presenter;
+//    }
 }

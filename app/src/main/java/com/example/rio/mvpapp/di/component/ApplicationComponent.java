@@ -11,6 +11,9 @@ import com.example.rio.mvpapp.di.ApplicationContext;
 import com.example.rio.mvpapp.di.module.ApplicationModule;
 import com.example.rio.mvpapp.di.module.NetModule;
 import com.example.rio.mvpapp.retrofit.RetrofitBuilder;
+import com.example.rio.mvpapp.view.activity.login.LoginActivity;
+import com.example.rio.mvpapp.view.activity.main.MainActivity;
+import com.example.rio.mvpapp.view.activity.splash.SplashActivity;
 
 import javax.inject.Singleton;
 
@@ -36,6 +39,5 @@ public interface ApplicationComponent {
 
     RetrofitBuilder getRetrofitBuilder();
 
-//    APIInterface getApiInterface();
 
 }

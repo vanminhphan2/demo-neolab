@@ -22,60 +22,88 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-public class SplashPresenter implements SplashPresenterListener{
+public class SplashPresenter implements SplashPresenterListener {
 
     private SplashViewListener splashViewListener;
     private Context context;
     private SharedPrefsHelper sharedPrefsHelper;
     private Retrofit retrofit;
 
+    @NonNull
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
     @Inject
     public SplashPresenter(DataManager dataManager) {
-        sharedPrefsHelper=dataManager.getPrefs();
-        this.retrofit=dataManager.getRetrofit();
-    }
-
-    public void bindListener(SplashViewListener listener){
-        this.splashViewListener = listener;
+        sharedPrefsHelper = dataManager.getPrefs();
+        this.retrofit = dataManager.getRetrofit();
     }
 
     @Override
     public void checkLogin() {
-        if(sharedPrefsHelper.get(Constants.PHONE,"").equals("")){
+        if (sharedPrefsHelper.get(Constants.PHONE, "").equals("")) {
             splashViewListener.toLogin();
-        }else {
-            loginServer(sharedPrefsHelper.get(Constants.PHONE,""),sharedPrefsHelper.get(Constants.PASS,""));
+        } else {
+            loginServer(sharedPrefsHelper.get(Constants.PHONE, ""), sharedPrefsHelper.get(Constants.PASS, ""));
         }
     }
 
     @Override
     public void setViewListener(Context context, SplashViewListener splashViewListener) {
         this.splashViewListener = splashViewListener;
-        this.context=context;
+        this.context = context;
     }
+
 
     private void loginServer(final String phone, final String pass) {
 
-        Call<User> posts = retrofit.create(APIInterface.class).getData();
+//        Observable<List<User>> posts = retrofit.create(APIInterface.class);
 
-        posts.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
-                Log.e("onResponse onResponse", " -->loginServer : " + response.toString());
-            }
+        mCompositeDisposable = new CompositeDisposable();
+        APIInterface reqApi = retrofit.create(APIInterface.class);
 
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e("onFailure onFailure", " -->loginServer : " + t.toString());
-            }
-        });
+        Disposable disposable = reqApi.getData()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())//Sau khi gọi thằng .observeOn(AndroidSchedulers.mainThread()) thì thằng subscribe sẽ chạy trên thread mà nó chỉ định
+                .subscribe(response -> {
+                    handleResponse(response);
+                }, error -> handleError(error));
 
+        mCompositeDisposable.add(disposable);
+
+//        posts.enqueue(new Callback<List<User>>() {
+//            @Override
+//            public void onResponse(Call<List<User>> call, retrofit2.Response<List<User>> response) {
+//                Log.e("onResponse onResponse", " -->loginServer : " + response.toString());
+//                if(response.message().equals("OK")){
+//
+//                    Log.e("onResponse onResponse", " -->loginServer : " + response.body().toString());
+//
+//                }else {
+//
+//                    Log.e("onResponse onResponse", " -->loginServer : " + "loiiii 111");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<User>> call, Throwable t) {
+//                Log.e("onFailure onFailure", " -->loginServer : " + t.toString());
+//            }
+//        });
 
 
 //        JSONObject jsonObject = new JSONObject();
@@ -118,5 +146,32 @@ public class SplashPresenter implements SplashPresenterListener{
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    private void handleResponse(List<User> androidList) {
+
+
+        try {
+            if (androidList != null) {
+
+//                                splashViewListener.toMain(resultServer.getData());
+
+            } else {
+//                                splashViewListener.toLogin();
+
+            }
+        } catch (Exception e) {
+            Log.e("loi pasre gson", " -->loginServer : " + e.toString());
+        }
+        Log.e("Rio ", "loginServer -- handleResponse :" + androidList.toString());
+
+    }
+
+    private void handleError(Throwable error) {
+        Log.e("Rio ", "loginServer -- handleError :");
+    }
+
+    private void handleSuccess() {
+        Log.e("Rio ", "loginServer -- handleSuccess :");
     }
 }

@@ -3,9 +3,9 @@ package com.example.rio.mvpapp.di;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Scope;
+import javax.inject.Qualifier;
 
-//@Scope
-//@Retention(RetentionPolicy.RUNTIME)
-public @interface PerNet {
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface API {
 }

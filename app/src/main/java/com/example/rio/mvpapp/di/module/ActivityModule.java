@@ -51,5 +51,4 @@ public class ActivityModule {
         return presenter;
     }
 
-
 }
